@@ -1,16 +1,24 @@
-// Importações básicas do node
+// Importações básicas do node para APIs
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import path from 'path';
 
-// ÁREA PARA IMPORTAR AS ROTAS. Exemplo: 
-// import mainRoutes from './routes/index';
+// ÁREA PARA IMPORTAR AS ROTAS DA API. Exemplo: 
+import rotasAPI from './routes/api';
 
 // Configuração do dotenv
 dotenv.config();
 
 // Expressão do servidor
 const server = express();
+
+// Abaixo, é para configurar o CORS, para que o servidor aceite requisições de outros domínios
+// Caso não tenha parâmetro, aceitará requisições de qualquer domínio
+
+server.use(cors({
+    origin: 'https://resttesttest.com'   
+}));
 
 //  Criando uma rota para pasta public, utilizando o path.join para juntar o diretório do arquivo com a pasta public
 server.use(express.static(path.join(__dirname, '../public')));
@@ -19,9 +27,10 @@ server.use(express.static(path.join(__dirname, '../public')));
 server.use(express.urlencoded({extended: true}));
 
 // ÁREA PARA CHAMAR AS ROTAS. Exemplo:
-// server.use(mainRoutes);
+server.use('/api', rotasAPI);
 
-// Criando a página não encontrada
+// Fazendo uma rota para o endpoint não encontrado, para que o servidor retorne um erro 404
+// Importante que aqui não tem o res.send e sim um res.json para retornar um JSON
 server.use((req: Request, res: Response) => {
     res.status(404);
     res.json({error: 'Endpoint não encontrado!'})
