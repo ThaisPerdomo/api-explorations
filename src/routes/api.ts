@@ -21,12 +21,14 @@ router.get('/nome/:nome', ApiController.nome);
 
 router.post('/frases', ApiController.createPhrase);
 
-// router.get('/frases');
+router.get('/frases', ApiController.getPhrases);
 
-// router.get('/frases/:id');
+router.get('/frases/aleatoria', ApiController.randomPhrase);
 
-// router.put('/frases/:id');
+router.get('/frases/:id', ApiController.getOnePhrase);
 
-// router.delete('/frases/:id');
+router.put('/frases/:id', ApiController.updatePhrase);
+
+router.delete('/frases/:id', ApiController.deletePhrase);
 
 export default router;
