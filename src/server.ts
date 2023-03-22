@@ -16,9 +16,7 @@ const server = express();
 // Abaixo, é para configurar o CORS, para que o servidor aceite requisições de outros domínios
 // Caso não tenha parâmetro, aceitará requisições de qualquer domínio
 
-server.use(cors({
-    origin: 'https://resttesttest.com'   
-}));
+server.use(cors());
 
 //  Criando uma rota para pasta public, utilizando o path.join para juntar o diretório do arquivo com a pasta public
 server.use(express.static(path.join(__dirname, '../public')));
@@ -26,8 +24,13 @@ server.use(express.static(path.join(__dirname, '../public')));
 // OPCIONAL: Deixando nosso servidor preparado para receber dados do formulário de forma POST
 server.use(express.urlencoded({extended: true}));
 
-// ÁREA PARA CHAMAR AS ROTAS. Exemplo:
+
+// server.use(express.json());
+
+//ÁREA PARA CHAMAR AS ROTAS DA API. Não precisa ter uma rota "extra" igual a abaixo que tem um '/api'; ou seja, poderia ser um .use(rotaAPI)
 server.use('/api', rotasAPI);
+
+
 
 // Fazendo uma rota para o endpoint não encontrado, para que o servidor retorne um erro 404
 // Importante que aqui não tem o res.send e sim um res.json para retornar um JSON
